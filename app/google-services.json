@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "404397846093",
+    "firebase_url": "https://androidchat-bc572.firebaseio.com",
+    "project_id": "androidchat-bc572",
+    "storage_bucket": "androidchat-bc572.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:404397846093:android:fd5cc2e54ec7b156",
+        "android_client_info": {
+          "package_name": "com.example.neslaram.androidchat"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "404397846093-e72rn8vs18ponmh4dfmehq04smv1rlsq.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB2FtI93fqaQwcMc7Kk9H3GQyGlctn2HRE"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
