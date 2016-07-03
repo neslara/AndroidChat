@@ -4,7 +4,6 @@ android {
     compileSdkVersion rootProject.ext.compileSdkVersion
     buildToolsVersion rootProject.ext.buildToolsVersion
 
-
     defaultConfig {
         applicationId "com.example.neslaram.androidchat"
         minSdkVersion rootProject.ext.minSdkVersion
@@ -31,13 +30,14 @@ dependencies {
     compile "com.android.support:design:$rootProject.ext.supportLibraryVersion"
     compile "com.android.support:support-v4:$rootProject.ext.supportLibraryVersion"
 
-    compile "com.google.firebase:firebase-core:$rootProject.ext.firebaseVersion"
     compile "com.google.firebase:firebase-database:$rootProject.ext.firebaseVersion"
     compile "com.google.firebase:firebase-auth:$rootProject.ext.firebaseVersion"
     compile "de.hdodenhof:circleimageview:$rootProject.ext.circleImageViewVersion"
     compile "com.jakewharton:butterknife:$rootProject.ext.butterknifeVersion"
     compile "com.github.bumptech.glide:glide:$rootProject.ext.glideVersion"
-
+    compile "org.greenrobot:eventbus:$rootProject.ext.eventbusVersion"
 }
 
+
 apply plugin: 'com.google.gms.google-services'
+
