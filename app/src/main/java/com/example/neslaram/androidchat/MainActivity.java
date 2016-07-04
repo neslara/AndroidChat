@@ -12,6 +12,7 @@ import android.widget.Button;
 import android.widget.LinearLayout;
 
 import com.example.neslaram.androidchat.login.LoginPresenter;
+import com.example.neslaram.androidchat.login.LoginPresenterImpl;
 import com.example.neslaram.androidchat.login.LoginView;
 
 import butterknife.Bind;
@@ -42,9 +43,16 @@ public class MainActivity extends AppCompatActivity implements LoginView {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        loginPresenter= new LoginPresenterImpl(this);
+        loginPresenter.onCreate();
+        loginPresenter.checkForAuthenticatedUser();
+    }
 
+    @Override
+    protected void onDestroy() {
+        loginPresenter.onDestroy();
+        super.onDestroy();
     }
 
     @Override
