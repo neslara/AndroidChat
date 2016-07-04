@@ -6,6 +6,8 @@ import com.example.neslaram.androidchat.lib.EventBus;
 import com.example.neslaram.androidchat.lib.GreenRobotEventBus;
 import com.example.neslaram.androidchat.login.events.LoginEvent;
 
+import org.greenrobot.eventbus.Subscribe;
+
 /**
  * Created by neslaram on 03/07/16.
  */
@@ -59,6 +61,7 @@ public class LoginPresenterImpl implements LoginPresenter {
         loginInteractor.doSignUp(email, password);
     }
 
+    @Subscribe
     @Override
     public void onEventMainThread(LoginEvent event) {
         switch (event.getEvenType()) {

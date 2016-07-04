@@ -1,7 +1,5 @@
 package com.example.neslaram.androidchat.lib;
 
-import java.util.Objects;
-
 /**
  * Created by neslaram on 03/07/16.
  */
