@@ -1,9 +1,16 @@
 package com.example.neslaram.androidchat.domain;
 
+import com.example.neslaram.androidchat.entities.User;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Created by neslaram on 25/06/16.
@@ -23,8 +30,8 @@ public class FirebaseHelper {
         return SingletonHolder.INSTANCE;
     }
 
-    private FirebaseHelper() {
-        this.dataReference = FirebaseDatabase.getInstance().getReference();
+    public FirebaseHelper(){
+        dataReference = FirebaseDatabase.getInstance().getReference();
     }
 
     public DatabaseReference getDataReference() {
@@ -33,10 +40,14 @@ public class FirebaseHelper {
 
     public String getAuthUserEmail() {
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-        return user != null ? user.getEmail() : null;
+        String email = null;
+        if (user != null) {
+            email = user.getEmail();
+        }
+        return email;
     }
 
-    public DatabaseReference getUserReference(String email) {
+    public DatabaseReference getUserReference(String email){
         DatabaseReference userReference = null;
         if (email != null) {
             String emailKey = email.replace(".", "_");
@@ -44,4 +55,73 @@ public class FirebaseHelper {
         }
         return userReference;
     }
+
+    public DatabaseReference getMyUserReference() {
+        return getUserReference(getAuthUserEmail());
+    }
+
+    public DatabaseReference getContactsReference(String email){
+        return getUserReference(email).child(CONTACTS_PATH);
+    }
+
+    public DatabaseReference getMyContactsReference(){
+        return getContactsReference(getAuthUserEmail());
+    }
+
+    public DatabaseReference getOneContactReference(String mainEmail, String childEmail){
+        String childKey = childEmail.replace(".","_");
+        return getUserReference(mainEmail).child(CONTACTS_PATH).child(childKey);
+    }
+
+//    public DatabaseReference getChatsReference(String receiver){
+//        String keySender = getAuthUserEmail().replace(".","_");
+//        String keyReceiver = receiver.replace(".","_");
+//
+//        String keyChat = keySender + SEPARATOR + keyReceiver;
+//        if (keySender.compareTo(keyReceiver) > 0) {
+//            keyChat = keyReceiver + SEPARATOR + keySender;
+//        }
+//        return dataReference.getRoot().child(CHATS_PATH).child(keyChat);
+//    }
+
+    public void changeUserConnectionStatus(boolean online) {
+        if (getMyUserReference() != null) {
+            Map<String, Object> updates = new HashMap<String, Object>();
+            updates.put("online", online);
+            getMyUserReference().updateChildren(updates);
+
+            notifyContactsOfConnectionChange(online);
+        }
+    }
+
+    public void signOff(){
+        notifyContactsOfConnectionChange(User.OFFLINE, true);
+    }
+
+    public void notifyContactsOfConnectionChange(final boolean online, final boolean signoff) {
+        final String myEmail = getAuthUserEmail();
+        getMyContactsReference().addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot snapshot) {
+                for (DataSnapshot child : snapshot.getChildren()) {
+                    String email = child.getKey();
+                    DatabaseReference reference = getOneContactReference(email, myEmail);
+                    reference.setValue(online);
+                }
+                if (signoff){
+                    FirebaseAuth.getInstance().signOut();
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError firebaseError) {
+            }
+        });
+    }
+
+    public void notifyContactsOfConnectionChange(boolean online) {
+        notifyContactsOfConnectionChange(online, false);
+    }
+
+
 }
