@@ -1,4 +1,4 @@
-package com.example.neslaram.androidchat;
+package com.example.neslaram.androidchat.login.ui;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -11,9 +11,11 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
 
+import com.example.neslaram.androidchat.ContactActivity;
+import com.example.neslaram.androidchat.R;
 import com.example.neslaram.androidchat.login.LoginPresenter;
 import com.example.neslaram.androidchat.login.LoginPresenterImpl;
-import com.example.neslaram.androidchat.login.LoginView;
+import com.example.neslaram.androidchat.login.ui.LoginView;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -90,7 +92,7 @@ public class MainActivity extends AppCompatActivity implements LoginView {
     @Override
     public void handleSignIn() {
         String email = inputEmail.getText().toString().trim();
-        String password = inputEmail.getText().toString().trim();
+        String password = inputPassword.getText().toString().trim();
         if (!email.isEmpty() || !password.isEmpty()) {
             loginPresenter.validateLogin(email, password);
         }

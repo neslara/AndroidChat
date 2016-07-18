@@ -17,10 +17,10 @@ import java.util.Map;
  */
 public class FirebaseHelper {
     private DatabaseReference dataReference;
+    private final static String SEPARATOR = "___";
     private final static String CHATS_PATH = "chats";
     private final static String USERS_PATH = "users";
-    private final static String CONTACTS_PATH = "contacts";
-    private final static String FIREBASE_URL = "https://androidchat-bc572.firebaseio.com";
+    public final static String CONTACTS_PATH = "contacts";
 
     private static class SingletonHolder {
         private static final FirebaseHelper INSTANCE = new FirebaseHelper();
@@ -73,16 +73,16 @@ public class FirebaseHelper {
         return getUserReference(mainEmail).child(CONTACTS_PATH).child(childKey);
     }
 
-//    public DatabaseReference getChatsReference(String receiver){
-//        String keySender = getAuthUserEmail().replace(".","_");
-//        String keyReceiver = receiver.replace(".","_");
-//
-//        String keyChat = keySender + SEPARATOR + keyReceiver;
-//        if (keySender.compareTo(keyReceiver) > 0) {
-//            keyChat = keyReceiver + SEPARATOR + keySender;
-//        }
-//        return dataReference.getRoot().child(CHATS_PATH).child(keyChat);
-//    }
+    public DatabaseReference getChatsReference(String receiver){
+        String keySender = getAuthUserEmail().replace(".","_");
+        String keyReceiver = receiver.replace(".","_");
+
+        String keyChat = keySender + SEPARATOR + keyReceiver;
+        if (keySender.compareTo(keyReceiver) > 0) {
+            keyChat = keyReceiver + SEPARATOR + keySender;
+        }
+        return dataReference.getRoot().child(CHATS_PATH).child(keyChat);
+    }
 
     public void changeUserConnectionStatus(boolean online) {
         if (getMyUserReference() != null) {
@@ -92,10 +92,6 @@ public class FirebaseHelper {
 
             notifyContactsOfConnectionChange(online);
         }
-    }
-
-    public void signOff(){
-        notifyContactsOfConnectionChange(User.OFFLINE, true);
     }
 
     public void notifyContactsOfConnectionChange(final boolean online, final boolean signoff) {
@@ -123,5 +119,7 @@ public class FirebaseHelper {
         notifyContactsOfConnectionChange(online, false);
     }
 
-
+    public void signOff(){
+        notifyContactsOfConnectionChange(User.OFFLINE, true);
+    }
 }

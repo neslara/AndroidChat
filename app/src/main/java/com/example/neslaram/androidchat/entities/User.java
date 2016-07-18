@@ -6,14 +6,18 @@ import java.util.Map;
  * Created by neslaram on 03/07/16.
  */
 public class User {
-
-    public static final boolean ONLINE = true;
-    public static final boolean OFFLINE = false;
-    private String email;
-    private boolean online;
+    String email;
+    boolean online;
     Map<String, Boolean> contacts;
+    public final static boolean ONLINE = true;
+    public final static boolean OFFLINE = false;
 
-    public User() {
+    public User(){ }
+
+    public User(String email, boolean online, Map<String, Boolean> contacts){
+        this.email = email;
+        this.online = online;
+        this.contacts = contacts;
     }
 
     public String getEmail() {

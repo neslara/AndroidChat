@@ -5,6 +5,7 @@ import android.util.Log;
 import com.example.neslaram.androidchat.lib.EventBus;
 import com.example.neslaram.androidchat.lib.GreenRobotEventBus;
 import com.example.neslaram.androidchat.login.events.LoginEvent;
+import com.example.neslaram.androidchat.login.ui.LoginView;
 
 import org.greenrobot.eventbus.Subscribe;
 
@@ -65,7 +66,7 @@ public class LoginPresenterImpl implements LoginPresenter {
     @Override
     public void onEventMainThread(LoginEvent event) {
         switch (event.getEvenType()) {
-            case LoginEvent.onSignInSucces:
+            case LoginEvent.onSignInSuccess:
                 onSignInSuccess();
                 break;
             case LoginEvent.onSignInError:

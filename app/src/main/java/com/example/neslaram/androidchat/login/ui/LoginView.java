@@ -1,4 +1,4 @@
-package com.example.neslaram.androidchat.login;
+package com.example.neslaram.androidchat.login.ui;
 
 /**
  * Created by neslaram on 03/07/16.
